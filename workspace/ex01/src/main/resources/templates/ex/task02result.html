@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>총점</th>
+            <th>평균점수</th>
+        </tr>
+        <tr>
+            <td th:text="${total}"></td>
+            <td th:text="${avg}"></td>
+        </tr>
+        <tr>
+            <td th:text="${taskVO.eng + taskVO.math + taskVO.kor}"></td>
+            <td th:text="${(taskVO.eng + taskVO.math + taskVO.kor)/taskVO.num}"></td>
+        </tr>
+    </table>
+</body>
+</html>
