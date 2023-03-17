@@ -35,7 +35,9 @@ public class ProductController {
     public void get(Long productId, Model model){
         model.addAttribute(productService.getProduct(productId));
     }
-    
+
+
+
 //    수정 완료
     @PostMapping("update")
     public RedirectView update(ProductVO productVO, RedirectAttributes redirectAttributes){

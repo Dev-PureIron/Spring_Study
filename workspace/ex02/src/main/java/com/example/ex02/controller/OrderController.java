@@ -27,7 +27,7 @@ public class OrderController {
     @GetMapping("/")
     public void order(ProductVO productVO){;}
 
-//    주문완료
+//    주문 완료
     @PostMapping("/")
     @Transactional(rollbackFor = Exception.class)
     public RedirectView order(OrderVO orderVO) {
@@ -35,13 +35,13 @@ public class OrderController {
         return new RedirectView("/order/list");
     }
 
-//    주문내역
+//    주문 내역
     @GetMapping("list")
     public void showList(Model model) {
         model.addAttribute("orders", orderService.getList());
     }
 
-//    주문취소
+//    주문 취소
     @PostMapping("cancel")
     @Transactional(rollbackFor = Exception.class)
     public RedirectView cancel(Long orderId) {

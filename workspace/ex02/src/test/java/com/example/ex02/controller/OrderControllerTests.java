@@ -43,7 +43,7 @@ public class OrderControllerTests {
 
 //    주문내역
     @Test
-    public void showListTest() throws Exception{
+    public void showListTest() throws Exception {
         log.info(mockMvc.perform(MockMvcRequestBuilders.get("/order/list")).andReturn().getModelAndView().getModelMap().toString());
     }
 
