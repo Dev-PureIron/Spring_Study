@@ -6,8 +6,16 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 public class TaskVO {
-    private int num;
-    private int kor;
-    private int eng;
-    private int math;
+    private Integer num;
+    private Integer kor;
+    private Integer eng;
+    private Integer math;
+
+    public Integer getTotal(){
+        return kor + eng + math;
+    }
+
+    public Double getAverage() {
+        return getTotal() / 3.0;
+    }
 }

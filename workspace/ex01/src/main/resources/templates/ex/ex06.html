@@ -10,13 +10,13 @@
             <th>이름</th>
             <th>나이</th>
             <th>성별</th>
-            <th>주소</th>
+            <th>사는 도시</th>
         </tr>
         <tr>
             <td th:text="${memberVO.name}"></td>
             <td th:text="${memberVO.age}"></td>
             <td th:text="${memberVO.gender}"></td>
-            <td th:text="${address}"></td>
+            <td th:text="${param.address}"></td>
         </tr>
     </table>
 </body>
