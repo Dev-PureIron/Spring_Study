@@ -18,16 +18,16 @@ public class ProductController {
     private final ProductService productService;
 
 //    등록
+//    등록 완료
+@PostMapping("register")
+public RedirectView register(ProductVO productVO) {
+    productService.registerProduct(productVO);
+    return new RedirectView("/product/list");
+}
+
     @GetMapping("register")
     public void register(Model model){
         model.addAttribute(new ProductVO());
-    }
-    
-//    등록 완료
-    @PostMapping("register")
-    public RedirectView register(ProductVO productVO) {
-        productService.registerProduct(productVO);
-        return new RedirectView("/product/list");
     }
 
 //    상세보기, 수정
