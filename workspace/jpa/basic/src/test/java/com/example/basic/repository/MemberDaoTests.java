@@ -3,7 +3,7 @@ package com.example.basic.repository;
 import com.example.basic.domain.entity.Member;
 import com.example.basic.type.MemberType;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -24,14 +26,16 @@ public class MemberDaoTests {
 
     @Test
     public void saveTest(){
-        Member member = new Member();
-        member.setMemberName("한동석");
-        member.setMemberEmail("tedhan1204@gmail.com");
-        member.setMemberPassword("1234");
-        member.setMemberType(MemberType.MEMBER);
-        member.setMemberAge(20);
+        for (int i=0; i<100; i++){
+            Member member = new Member();
+            member.setMemberName("user" + (i + 1));
+            member.setMemberEmail("user" + (i + 1) +"@gmail.com");
+            member.setMemberPassword("" + i);
+            member.setMemberType(MemberType.MEMBER);
+            member.setMemberAge(i + 1);
 
-        memberDAO.save(member);
+            memberDAO.save(member);
+        }
     }
 
     @Test
@@ -49,21 +53,21 @@ public class MemberDaoTests {
 
     @Test
     public void deleteTest(){
-        Member member = new Member();
-        member.setMemberName("한동석");
-        member.setMemberEmail("tedhan1204@gmail.com");
-        member.setMemberPassword("1234");
-        member.setMemberType(MemberType.MEMBER);
-        member.setMemberAge(20);
-
-        memberDAO.save(member);
-        memberDAO.delete(member);
+//        Member member = new Member();
+//        member.setMemberName("한동석");
+//        member.setMemberEmail("tedhan1204@gmail.com");
+//        member.setMemberPassword("1234");
+//        member.setMemberType(MemberType.MEMBER);
+//        member.setMemberAge(20);
+//
+//        memberDAO.save(member);
+        memberDAO.findById(4L).ifPresent(memberDAO::delete);
     }
 
     @Test
     public void findByIdTest(){
         Optional<Member> optionalMember = memberDAO.findById(10L);
-//        optionalMember.orElse(new Member());
+//        Member member = optionalMember.orElse(new Member());
 //        Member member = optionalMember.orElseGet(Member::new);
 
 //        if(optionalMember.isPresent()){
@@ -71,9 +75,37 @@ public class MemberDaoTests {
 //        }
 
 //        optionalMember.ifPresent(member -> assertThat(member.getMemberName()).isEqualTo("한동석"));
+    }
 
+    @Test
+    public void findAllTest(){
+        memberDAO.findAll().stream().map(Member::getMemberName).forEach(log::info);
+    }
+
+    @Test
+    public void findAllWithPagingTest(){
+        memberDAO.findAllWithPaging(11, 10).stream().map(Member::getMemberName).forEach(log::info);
+    }
+
+    @Test
+    public void findByMemberNameTest(){
+//        memberDAO.findByMemberName("user99").stream().map(Member::getMemberName).forEach(log::info);
+        assertThat(memberDAO.findByMemberName("user99").stream().map(Member::getMemberAge).map(String::valueOf).collect(Collectors.joining())).isEqualTo("99");
+    }
+
+    @Test
+    public void deleteByMemberAgeGreaterThanEqualTest(){
+        memberDAO.deleteByMemberAgeGreaterThanEqual(90);
+    }
+
+    @Test
+    public void updateByMemberAgeLessThanEqualTest(){
+        memberDAO.findAll();
+        memberDAO.updateByMemberAgeLessThanEqual(20);
+        memberDAO.findAll().stream().map(Member::getMemberType).map(Enum::toString).forEach(log::info);
     }
 }
+
 
 
 
