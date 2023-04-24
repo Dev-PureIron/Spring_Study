@@ -37,7 +37,7 @@ public class ReviewFileTest {
         reviewFileDAO.findById(21L)
                 .ifPresentOrElse(
                         reviewFile -> log.info(reviewFile.getName()),
-                        () -> log.info("존재하지 않는 파일입니다."));
+                                () -> log.info("존재하지 않는 파일입니다."));
     }
 
     @Test
@@ -56,6 +56,7 @@ public class ReviewFileTest {
     }
 
 }
+
 
 
 

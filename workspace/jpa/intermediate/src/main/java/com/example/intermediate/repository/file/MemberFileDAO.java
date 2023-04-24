@@ -26,7 +26,7 @@ public class MemberFileDAO {
 
 //    전체 조회
     public List<MemberFile> findAll(){
-//        상속관계일 경우 자식 엔티티를 조회하더라도 자동으로 JOIN된다.
+//        상속관계일 경우 자식 엔티티를 조회하면 자동으로 부모 테이블과 JOIN된다.
         String query = "select m from MemberFile m";
         return entityManager.createQuery(query, MemberFile.class).getResultList();
     }

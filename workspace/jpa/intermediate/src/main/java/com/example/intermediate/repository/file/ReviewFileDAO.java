@@ -1,6 +1,7 @@
 package com.example.intermediate.repository.file;
 
 import com.example.intermediate.entity.file.File;
+import com.example.intermediate.entity.file.MemberFile;
 import com.example.intermediate.entity.file.ReviewFile;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +23,7 @@ public class ReviewFileDAO {
 
 //    조회
     public Optional<ReviewFile> findById(Long id){
-//        상속관계일 경울 자식 엔티티를 조회하면 자동으로 부모 테이블과 JOIN된다.
+//        상속관계일 경우 자식 엔티티를 조회하면 자동으로 부모 테이블과 JOIN된다.
         return Optional.ofNullable(entityManager.find(ReviewFile.class, id));
     }
 
@@ -37,4 +38,6 @@ public class ReviewFileDAO {
     public void delete(ReviewFile reviewFile){
         entityManager.remove(reviewFile);
     }
+
 }
+
