@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:XE
+    url: jdbc:oracle:thin:@3.34.188.161:1521:XE
     username: hr
     password: hr
 
@@ -14,7 +14,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.Oracle10gDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
     #jpa format
     properties:
