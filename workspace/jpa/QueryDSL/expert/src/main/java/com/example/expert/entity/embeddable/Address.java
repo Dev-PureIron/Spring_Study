@@ -3,11 +3,12 @@ package com.example.expert.entity.embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
-@Getter
+@Getter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {

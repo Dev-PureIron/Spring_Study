@@ -6,6 +6,7 @@ import com.example.expert.entity.order.Order;
 import com.example.expert.entity.pay.Pay;
 import com.example.expert.entity.product.Product;
 import com.example.expert.entity.product.ProductDTO;
+import com.example.expert.entity.product.ProductSearch;
 import com.example.expert.entity.type.PayStatus;
 import com.example.expert.repository.member.MemberRepository;
 import com.example.expert.repository.order.OrderRepository;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +75,32 @@ public class RepositoryTests {
     @Test
     public void findTop1ProductByOrderTest(){
         payRepository.findTop1ProductByOrder().map(ProductDTO::toString).ifPresent(log::info);
+    }
+
+    @Test
+    public void findProductByOrderIdTest(){
+        log.info(payRepository.findProductByOrderId(12L).toString());
+    }
+
+    @Test
+    public void findMemberByOrderIdTest(){
+//        orderRepository.findMemberByOrderId(23L).map(Order::getMember).map(Member::toString).ifPresent(log::info);
+        memberRepository.findMemberByOrderId(23L).map(Member::toString).ifPresent(log::info);
+    }
+
+    @Test
+    public void findPayByProductTest(){
+        List<Pay> pays = productRepository.findPayByProduct(1L);
+        pays.forEach(pay -> log.info(pay.toString()));
+        log.info(pays.get(0).getProduct().toString());
+    }
+
+    @Test
+    public void findAllWithSearchTest(){
+        ProductSearch productSearch = new ProductSearch();
+//        productSearch.setProductPrice(4000L);
+//        productSearch.setProductStock(702L);
+        productRepository.findAllWithSearch(productSearch, PageRequest.of(3, 2));
     }
 }
 

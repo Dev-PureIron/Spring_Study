@@ -18,6 +18,16 @@ public class PayQueryDslImpl implements PayQueryDsl {
     @Autowired
     private JPAQueryFactory query;
 
+//    패치 조인을 사용해야 할 때
+//     해당 객체를 select절에 작성한 뒤 JAVA쪽에서 엔티티 그래프 탐색을 진행할 때
+//     select(order).from(order).join(order.member).fetchJoin()
+    
+//    패치 조인을 사용하면 안될 때
+//     select절에 원하는 연관 엔티티를 작성하거나 DTO를 작성해야 할 때
+//     select(order.member).from(order)
+
+//    ※ 패치 조인 시 추가 적인 조건절은 on절이 아닌 where절에 작성해야 한다.
+
     @Override
     public List<ProductDTO> findCountOfOrder() {
         return query.select(
@@ -51,6 +61,11 @@ public class PayQueryDslImpl implements PayQueryDsl {
                 .offset(0)
                 .limit(1)
                 .fetchOne());
+    }
+
+    @Override
+    public List<Product> findProductByOrderId(Long id) {
+        return query.select(pay.product).from(pay).where(pay.order.id.eq(id)).fetch();
     }
 }
 

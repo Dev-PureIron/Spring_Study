@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TBL_PRODUCT")
-@Getter @ToString
+@Getter @ToString(exclude = "pays")
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {

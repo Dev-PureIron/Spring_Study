@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TBL_ORDER")
-@Getter @ToString(exclude = {"pay", "member"})
+@Getter @ToString(exclude = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
     @Id @GeneratedValue
@@ -18,9 +18,6 @@ public class Order {
     private Long id;
     @Embedded
     @NotNull private Address address;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
-    private Pay pay;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")

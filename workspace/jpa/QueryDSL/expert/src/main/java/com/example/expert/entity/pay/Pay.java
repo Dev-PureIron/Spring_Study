@@ -24,10 +24,11 @@ public class Pay {
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
-     @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ORDER_ID")
     private Order order;
 
     public Pay(Long totalPrice, PayStatus payStatus) {

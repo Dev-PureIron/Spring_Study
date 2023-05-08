@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TBL_MEMBER")
-@Getter @ToString
+@Getter @ToString(exclude = {"pays", "orders"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id @GeneratedValue

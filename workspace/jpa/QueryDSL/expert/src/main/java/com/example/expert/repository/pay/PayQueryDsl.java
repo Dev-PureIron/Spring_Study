@@ -17,4 +17,5 @@ public interface PayQueryDsl {
     public Optional<ProductDTO> findTop1ProductByOrder();
 
 //    주문 번호의 상품 조회
+    public List<Product> findProductByOrderId(Long id);
 }
