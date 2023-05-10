@@ -1,7 +1,7 @@
-package com.app.session.controller;
+package com.app.security.controller;
 
-import com.app.session.exception.CustomAuthenticationException;
-import com.app.session.exception.LoginFailedException;
+import com.app.security.exception.CustomAuthenticationException;
+import com.app.security.exception.LoginFailedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
