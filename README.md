@@ -358,11 +358,11 @@
 
     3. 그래프 탐색
 
-    	┌─Market─┐
-    	│        │
-Client──Order	Flower──Pot
-    	│
-    	Delivery  
+    	    ┌─Market─┐
+    	    │        │
+    Client──Order    Flower──Pot
+    	    │
+    	    Delivery  
 
     객체는 모든 객체 그래프를 탐색할 수 있어야 한다.
 
