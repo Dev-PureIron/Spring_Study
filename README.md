@@ -252,7 +252,7 @@
 
     1. 상속
 
-    ▶ RDB의 상속
+     ▶ RDB의 상속
 
 	[개발자]		[기획자]
 
@@ -264,7 +264,7 @@
 	기술등급		OA등급
 	프로젝트 수	클라이언트 수
 
-    또는
+ 또는
 
 	[사원]
 
@@ -278,7 +278,7 @@
 	프로젝트 수
 	클라이언트 수
 
-    또는
+또는
 
 	[사원] - 슈퍼
 
@@ -295,18 +295,18 @@
 	기술등급		OA등급
 	프로젝트 수	클라이언트 수
 
-    1:1 관계에서 INSERT를 하기 위해서는 쿼리를 2번 작성해야하는 불편함이 생긴다.
-    게다가 SELECT를 하기 위해서는 JOIN을 사용해야 하는데 쿼리가 굉장히 복잡해진다.
-    만약에 이런 RDB의 테이블 관계를 자바 컬렉션으로 바꿀 수 있다면,
+	1:1 관계에서 INSERT를 하기 위해서는 쿼리를 2번 작성해야하는 불편함이 생긴다.
+	게다가 SELECT를 하기 위해서는 JOIN을 사용해야 하는데 쿼리가 굉장히 복잡해진다.
+	만약에 이런 RDB의 테이블 관계를 자바 컬렉션으로 바꿀 수 있다면,
 
- ▶ 컬렉션 사용
+    ▶ 컬렉션 사용
 
-        Developer developer = list.get(developerId);
-        위와 같이 간단하게 조회할 수 있다.
+	Developer developer = list.get(developerId);
+	위와 같이 간단하게 조회할 수 있다.
 
     2. 연관관계
 
- ▶ 객체 연관 관계: 단방향으로 흘러간다(Flower에서 Pot접근은 가능, Pot에서 Flower접근 불가능)
+    ▶ 객체 연관 관계: 단방향으로 흘러간다(Flower에서 Pot접근은 가능, Pot에서 Flower접근 불가능)
 
 	Flower	→	Pot
 
@@ -315,7 +315,7 @@
 	Pot pot		color
 
 
- ▶ RDB 연관 관계: 양방향으로 흘러간다(FLOWER에서 POT을, POT에서 FLOWER를 접근할 수 있다)
+    ▶ RDB 연관 관계: 양방향으로 흘러간다(FLOWER에서 POT을, POT에서 FLOWER를 접근할 수 있다)
 
 	FLOWER	↔	POT
 
@@ -325,7 +325,7 @@
 	POT_ID(FK)	COLOR
 
 
- ▶ RDB 중심 설계
+    ▶ RDB 중심 설계
 
 	class Flower{
 		Long id;
@@ -336,7 +336,7 @@
 	RDB 방식으로 설계하면, 조회 시 JOIN을 하여 FLOWER테이블과 POT테이블에서 각각 필요한 정보를 가져와
 	각 객체에 담아주거나 DTO에 담아주어야 한다.
 
- ▶ 객체 중심 설계
+    ▶ 객체 중심 설계
 
 	class Flower{
 		Long id;
@@ -346,7 +346,7 @@
 
 	flower.setPot(pot)형태와 같이 복잡하게 작업해야 한다.
 
- ▶ 컬렉션 사용
+    ▶ 컬렉션 사용
 
 	하지만 만약 자바 컬렉션으로 관리가 가능하다면,
 
@@ -364,44 +364,43 @@ Client──Order	Flower──Pot
 	│
 	Delivery  
 
-    객체는 모든 객체 그래프를 탐색할 수 있어야 한다.
+객체는 모든 객체 그래프를 탐색할 수 있어야 한다.
 
-    하지만 SQL 작성 시 이미 탐색 범위가 결정된다.
-    만약 Market과 Flower를 JOIN해서 조회를 한다면,
-    market.getFlower()는 사용 가능하지만
-    market.getPot()는 null일 수 밖에 없다.
+하지만 SQL 작성 시 이미 탐색 범위가 결정된다.
+만약 Market과 Flower를 JOIN해서 조회를 한다면,
+market.getFlower()는 사용 가능하지만
+market.getPot()는 null일 수 밖에 없다.
 
-    따라서 엔티티에 대한 신뢰가 무너질 수 밖에 없다.
+따라서 엔티티에 대한 신뢰가 무너질 수 밖에 없다.
 
-    Market market = marketDAO.findById(marketId);
-    market.getFlower(); // null이 아니라고 확신할 수 없다.
-    market.getOrder().getClient(); // null이 아니라고 확신할 수 없다.
+Market market = marketDAO.findById(marketId);
+market.getFlower(); // null이 아니라고 확신할 수 없다.
+market.getOrder().getClient(); // null이 아니라고 확신할 수 없다.
 
-    marketDAO에 있는 findById()를 분석하지 않는 이상 각 엔티티에 대해 신뢰할 수 없다.
-    따라서 상황에 따라 조회에 대한 메소드를 여러 개 선언해놓아야 한다.
+marketDAO에 있는 findById()를 분석하지 않는 이상 각 엔티티에 대해 신뢰할 수 없다.
+따라서 상황에 따라 조회에 대한 메소드를 여러 개 선언해놓아야 한다.
 
-    marketDAO.getFlower();
-    marketDAO.getOrderWithClient();
-    marketDAO.getOrderWithClientWithDelivery();
-    ...
+marketDAO.getFlower();
+marketDAO.getOrderWithClient();
+marketDAO.getOrderWithClientWithDelivery();
+...
 
-    하지만 위와 같은 방법은 사실상 불가능에 가깝다.
+하지만 위와 같은 방법은 사실상 불가능에 가깝다.
 
     4. 값 비교
 	SQL 실행 결과를 담은 뒤 생성자를 호출하여 객체에 담으면 매번 new가 사용되기 때문에
 	동일한 조회 결과의 객체일지라도 주소가 모두 다르다.
 
- ▶ 컬렉션 사용
+    ▶ 컬렉션 사용
 
 	하지만 만약 자바 컬렉션에서 객체 조회가 가능하다면
 	list.get(memberId) == list.get(memberId);
 
-    ※ 1.2.3.4. 결론
+※ 1.2.3.4. 결론
 
-    즉, 객체지향으로 설계할 수록 작업이 오히려 복잡해지고 늘어나기 때문에 RDB 중심으로 설계할 수밖에 없다.
-    RDB를 자바 컬렉션에 저장하듯 사용하면 굉장히 편해지고 많은 문제가 해결되는데,
-    바로 이 기술을 JPA라고 한다.
-
+즉, 객체지향으로 설계할 수록 작업이 오히려 복잡해지고 늘어나기 때문에 RDB 중심으로 설계할 수밖에 없다.
+RDB를 자바 컬렉션에 저장하듯 사용하면 굉장히 편해지고 많은 문제가 해결되는데,
+바로 이 기술을 JPA라고 한다.
 
 
 ▶ JPA를 사용해야 하는 이유
